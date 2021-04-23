@@ -41,6 +41,7 @@ INSTALLED_APPS = [
 
     'auth_app',
     'users',
+    'import_export',
 ]
 
 AUTH_USER_MODEL = 'users.CustomUser'
