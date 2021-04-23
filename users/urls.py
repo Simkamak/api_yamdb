@@ -4,10 +4,10 @@ from rest_framework.routers import DefaultRouter
 
 router_v1 = DefaultRouter()
 
-router_v1.register('v1/users', views.UserList)
+router_v1.register('', views.UserList)
 
 urlpatterns = [
+    path('me/', views.UserDetailAPIView.as_view()),
     path('', include(router_v1.urls)),
-    #path('v1/users', views.test_user)
 
 ]

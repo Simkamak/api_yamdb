@@ -10,6 +10,14 @@ class AdminPermission(permissions.BasePermission):
         admin = User.objects.filter(role=User.UserRole.ADMIN)
         return role == admin
 
+class IsOwner(permissions.BasePermission):
+    def has_object_permission(self, request, view, obj):
+
+        if request.method in permissions.SAFE_METHODS:
+            return True
+
+
+        return obj.username == request.user.username
 
 
 
