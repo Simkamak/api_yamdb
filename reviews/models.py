@@ -28,6 +28,7 @@ class Review(models.Model):
     class Meta:
         ordering = ['-pub_date']
 
+
 class Comment(models.Model):
     review_id = models.ForeignKey(Review, related_name='comments',
                                   on_delete=models.CASCADE)
@@ -35,3 +36,6 @@ class Comment(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE,
                                related_name='comments')
     pub_date = models.DateTimeField('дата комментария', auto_now_add=True)
+
+    class Meta:
+        ordering = ['-pub_date']
