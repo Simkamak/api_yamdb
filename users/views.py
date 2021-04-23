@@ -1,15 +1,14 @@
-from rest_framework import permissions, viewsets
-from .serializers import CustomUserSerializer
-from .models import CustomUser
+from rest_framework import generics, permissions, viewsets, pagination
+from .serializers import UserSerializer
+from .models import User
+from .permissions import CustomPermission
 
 
-
-
-
-class CustomUserViewSet(viewsets.ModelViewSet):
-    queryset = CustomUser.objects.all()
-    serializer_class = CustomUserSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+class UserList(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    pagination_class = [pagination.PageNumberPagination]
+    #permission_classes = [CustomPermission]
 
 
 
