@@ -1,6 +1,6 @@
-from rest_framework import serializers, validators
+from rest_framework import serializers
 
-from .models import Review, Comment, Title
+from .models import Review, Comment
 
 
 class ReviewSerializer(serializers.ModelSerializer):
