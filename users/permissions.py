@@ -1,20 +1,15 @@
 from rest_framework import permissions
+from .models import User
+from django.contrib.auth.models import AnonymousUser
+from django.contrib.auth.backends import BaseBackend
 
 
-class CustomPermission(permissions.BasePermission):
+class AdminPermission(permissions.BasePermission):
     def has_permission(self, request, view):
-        if request.user.role == 'admin':
-            return request.user.is_superuser
-        elif request.user.role == 'moderator':
-            return
-        elif request.user.role == 'user':
-            return
+        role = request.user.role
+        admin = User.objects.filter(role=User.UserRole.ADMIN)
+        return role == admin
 
-class IsOwnerOrReadOnly(permissions.BasePermission):
 
-    def has_object_permission(self, request, view, obj):
 
-        if request.method in permissions.SAFE_METHODS:
-            return True
 
-        return obj.owner == request.user

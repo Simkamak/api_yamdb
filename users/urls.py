@@ -8,5 +8,6 @@ router_v1.register('v1/users', views.UserList)
 
 urlpatterns = [
     path('', include(router_v1.urls)),
+    #path('v1/users', views.test_user)
 
 ]
