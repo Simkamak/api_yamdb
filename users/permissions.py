@@ -1,20 +1,14 @@
-from django.contrib.auth.backends import BaseBackend
-from django.contrib.auth.models import AnonymousUser
 from rest_framework import permissions
 
 from .models import User
 
 
-class AdminPermission(permissions.BasePermission):
+class IsYAMDBAdministrator(permissions.BasePermission):
     def has_permission(self, request, view):
-        role = request.user.role
-        admin = User.objects.filter(role=User.UserRole.ADMIN)
-        return role == admin
-
-
-class IsOwner(permissions.BasePermission):
-    def has_object_permission(self, request, view, obj):
-        if request.method in permissions.SAFE_METHODS:
-            return True
-
-        return obj.username == request.user.username
+        if not request.user.is_authenticated:
+            return False
+        print('has_permission:', request.user, request.user.role)
+        return (
+                request.user.role == User.UserRole.ADMIN or
+                request.user.is_staff
+        )
