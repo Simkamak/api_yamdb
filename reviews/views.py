@@ -2,9 +2,10 @@ from django.shortcuts import get_object_or_404
 from rest_framework import viewsets
 from rest_framework.permissions import (IsAuthenticatedOrReadOnly)
 
-from .models import Comment, Title, Review
-from .serializers import ReviewSerializer, CommentSerializer
+from .models import Title, Review, Category, Genre
+from .serializers import ReviewSerializer, CommentSerializer, CategorySerializer, TitleSerializer
 from .permissions import IsOwnerOrReadOnly
+from users.permissions import AdminPermission
 from .pagination import CustomPagination
 
 
@@ -24,7 +25,6 @@ class ReviewViewSet(viewsets.ModelViewSet):
 
 
 class CommentViewSet(viewsets.ModelViewSet):
-    queryset = Comment.objects.all()
     permission_classes = (IsOwnerOrReadOnly, IsAuthenticatedOrReadOnly)
     serializer_class = CommentSerializer
     pagination_class = CustomPagination
@@ -39,3 +39,23 @@ class CommentViewSet(viewsets.ModelViewSet):
         review = get_object_or_404(Review, id=self.kwargs['review_id'])
         serializer.save(review_id=review, author=self.request.user)
 
+
+class CategoryViewSet(viewsets.ModelViewSet):
+    queryset = Category.objects.all()
+    permission_classes = (AdminPermission, IsAuthenticatedOrReadOnly)
+    serializer_class = CategorySerializer
+    pagination_class = CustomPagination
+
+
+class TitleViewSet(viewsets.ModelViewSet):
+    queryset = Title.objects.all()
+    permission_classes = (AdminPermission, IsAuthenticatedOrReadOnly)
+    serializer_class = TitleSerializer
+    pagination_class = CustomPagination
+
+
+class GenreViewSet(viewsets.ModelViewSet):
+    queryset = Genre.objects.all()
+    permission_classes = (AdminPermission, IsAuthenticatedOrReadOnly)
+    serializer_class = TitleSerializer
+    pagination_class = CustomPagination

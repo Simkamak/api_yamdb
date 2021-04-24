@@ -16,6 +16,11 @@ class Title(models.Model):
                                  on_delete=models.CASCADE)
 
 
+class Genre(models.Model):
+    name = models.CharField('Название жанра', max_length=200)
+    slug = models.SlugField(unique=True)
+
+
 class Review(models.Model):
     title_id = models.ForeignKey(Title, related_name='reviews',
                                  on_delete=models.CASCADE)
