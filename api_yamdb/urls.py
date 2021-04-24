@@ -1,5 +1,5 @@
 from django.contrib import admin
-from django.urls import include, path
+from django.urls import path, include
 from django.views.generic import TemplateView
 
 urlpatterns = [
@@ -11,4 +11,5 @@ urlpatterns = [
     ),
     path('api/', include('auth_app.urls')),
     path('api/v1/users/', include('users.urls')),
+    path('api/', include('reviews.urls')),
 ]
