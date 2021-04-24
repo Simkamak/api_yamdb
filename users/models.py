@@ -15,4 +15,4 @@ class User(AbstractUser):
     confirmation_code = models.TextField(null=True, default='')
 
     def __str__(self):
-        return self.email
+        return self.username

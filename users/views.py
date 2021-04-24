@@ -21,4 +21,4 @@ class UserDetailAPIView(generics.RetrieveUpdateAPIView):
 
     def get_object(self):
         print(self.request.user)
-        return get_object_or_404(User, email=self.request.user)
+        return get_object_or_404(User, username=self.request.user)
