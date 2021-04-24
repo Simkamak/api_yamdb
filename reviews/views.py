@@ -5,7 +5,7 @@ from rest_framework.permissions import (IsAuthenticatedOrReadOnly)
 from .models import Title, Review, Category, Genre
 from .serializers import ReviewSerializer, CommentSerializer, CategorySerializer, TitleSerializer
 from .permissions import IsOwnerOrReadOnly
-from users.permissions import AdminPermission
+from users.permissions import IsYAMDBAdministrator
 from .pagination import CustomPagination
 
 
@@ -42,20 +42,20 @@ class CommentViewSet(viewsets.ModelViewSet):
 
 class CategoryViewSet(viewsets.ModelViewSet):
     queryset = Category.objects.all()
-    permission_classes = (AdminPermission, IsAuthenticatedOrReadOnly)
+    permission_classes = (IsYAMDBAdministrator, IsAuthenticatedOrReadOnly)
     serializer_class = CategorySerializer
     pagination_class = CustomPagination
 
 
 class TitleViewSet(viewsets.ModelViewSet):
     queryset = Title.objects.all()
-    permission_classes = (AdminPermission, IsAuthenticatedOrReadOnly)
+    permission_classes = (IsYAMDBAdministrator, IsAuthenticatedOrReadOnly)
     serializer_class = TitleSerializer
     pagination_class = CustomPagination
 
 
 class GenreViewSet(viewsets.ModelViewSet):
     queryset = Genre.objects.all()
-    permission_classes = (AdminPermission, IsAuthenticatedOrReadOnly)
+    permission_classes = (IsYAMDBAdministrator, IsAuthenticatedOrReadOnly)
     serializer_class = TitleSerializer
     pagination_class = CustomPagination
