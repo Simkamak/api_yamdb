@@ -9,16 +9,20 @@ class Category(models.Model):
     slug = models.SlugField(unique=True)
 
 
-class Title(models.Model):
-    name = models.CharField('Название произведения', max_length=200)
-    year = models.IntegerField('Год выхода произведения')
-    category = models.ForeignKey(Category, related_name='titles',
-                                 on_delete=models.CASCADE)
-
-
 class Genre(models.Model):
     name = models.CharField('Название жанра', max_length=200)
     slug = models.SlugField(unique=True)
+
+
+class Title(models.Model):
+    name = models.CharField('Название произведения', max_length=200)
+    year = models.IntegerField('Год выхода произведения')
+    description = models.TextField('Описание')
+    category_id = models.ForeignKey(Category, related_name='titles',
+                                    on_delete=models.SET_NULL,
+                                    blank=True, null=True)
+    genre_id = models.ForeignKey(Genre, on_delete=models.SET_NULL,
+                                 related_name='titles', blank=True, null=True)
 
 
 class Review(models.Model):

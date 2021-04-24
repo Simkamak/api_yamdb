@@ -47,6 +47,7 @@ class CategoryViewSet(viewsets.ModelViewSet):
     pagination_class = CustomPagination
 
 
+
 class TitleViewSet(viewsets.ModelViewSet):
     queryset = Title.objects.all()
     permission_classes = (IsYAMDBAdministrator, IsAuthenticatedOrReadOnly)
