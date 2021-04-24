@@ -1,9 +1,9 @@
+from django.contrib.auth import get_user_model
+from django.core.mail import BadHeaderError, send_mail
+from django.shortcuts import get_object_or_404
+from rest_framework import permissions, status
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
-from django.contrib.auth import get_user_model
-from rest_framework import status, permissions
-from django.shortcuts import get_object_or_404
-from django.core.mail import send_mail, BadHeaderError
 from rest_framework_simplejwt.tokens import AccessToken
 
 User = get_user_model()
@@ -41,11 +41,3 @@ def get_token(request):
         return Response({'token': str(token)}, status=status.HTTP_200_OK)
     except BadHeaderError:
         return Response({}, status.HTTP_400_BAD_REQUEST)
-
-
-
-
-
-
-
-

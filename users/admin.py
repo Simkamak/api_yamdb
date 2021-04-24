@@ -1,8 +1,9 @@
 from django.contrib import admin
-from .resources import UserResource
-from import_export.admin import ImportMixin
 from django.contrib.auth.admin import UserAdmin
+from import_export.admin import ImportMixin
+
 from .models import User
+from .resources import UserResource
 
 
 @admin.register(User)
@@ -13,5 +14,3 @@ class CustomUserAdmin(ImportMixin, UserAdmin):
         'date_joined',
     ]
     resource_class = UserResource
-
-
