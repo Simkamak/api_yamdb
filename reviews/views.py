@@ -4,14 +4,14 @@ from rest_framework.permissions import (IsAuthenticatedOrReadOnly)
 
 from .models import Title, Review, Category, Genre
 from .serializers import ReviewSerializer, CommentSerializer, CategorySerializer, TitleSerializer
-from .permissions import IsOwnerOrReadOnly
+from .permissions import IsAbleToChange
 from users.permissions import IsYAMDBAdministrator
 from .pagination import CustomPagination
 
 
 class ReviewViewSet(viewsets.ModelViewSet):
     serializer_class = ReviewSerializer
-    permission_classes = (IsOwnerOrReadOnly, IsAuthenticatedOrReadOnly)
+    permission_classes = (IsAbleToChange, IsAuthenticatedOrReadOnly)
     pagination_class = CustomPagination
 
     def get_queryset(self):
@@ -25,7 +25,7 @@ class ReviewViewSet(viewsets.ModelViewSet):
 
 
 class CommentViewSet(viewsets.ModelViewSet):
-    permission_classes = (IsOwnerOrReadOnly, IsAuthenticatedOrReadOnly)
+    permission_classes = (IsAbleToChange, IsAuthenticatedOrReadOnly)
     serializer_class = CommentSerializer
     pagination_class = CustomPagination
 
@@ -45,7 +45,6 @@ class CategoryViewSet(viewsets.ModelViewSet):
     permission_classes = (IsYAMDBAdministrator, IsAuthenticatedOrReadOnly)
     serializer_class = CategorySerializer
     pagination_class = CustomPagination
-
 
 
 class TitleViewSet(viewsets.ModelViewSet):
