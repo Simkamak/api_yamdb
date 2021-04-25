@@ -1,9 +1,11 @@
 from django.shortcuts import get_object_or_404
-from rest_framework import viewsets
+from rest_framework import viewsets, status
 from rest_framework.permissions import (IsAuthenticatedOrReadOnly)
+from rest_framework.response import Response
 
 from .models import Title, Review, Category, Genre
-from .serializers import ReviewSerializer, CommentSerializer, CategorySerializer, TitleSerializer
+from .serializers import (
+    ReviewSerializer, CommentSerializer, CategorySerializer, TitleSerializer)
 from .permissions import IsAbleToChange
 from users.permissions import IsYAMDBAdministrator
 from .pagination import CustomPagination
@@ -18,10 +20,22 @@ class ReviewViewSet(viewsets.ModelViewSet):
         title = get_object_or_404(Title, id=self.kwargs['title_id'])
         return title.reviews.all()
 
-    def perform_create(self, serializer):
-        serializer.save(
-            title_id=get_object_or_404(Title, id=self.kwargs['title_id']),
-            author=self.request.user)
+    def create(self, request, *args, **kwargs):
+        serializer = ReviewSerializer(data=request.data)
+        if not Review.objects.filter(
+                title_id=get_object_or_404(
+                    Title, id=kwargs['title_id']),
+                author=request.user).exists():
+            if serializer.is_valid():
+                serializer.save(
+                    title_id=get_object_or_404(
+                        Title, id=kwargs['title_id']), author=request.user)
+                return Response(serializer.data,
+                                status=status.HTTP_201_CREATED)
+            return Response(serializer.errors,
+                            status=status.HTTP_400_BAD_REQUEST)
+        return Response('Уже оставили отзыв',
+                        status=status.HTTP_400_BAD_REQUEST)
 
 
 class CommentViewSet(viewsets.ModelViewSet):

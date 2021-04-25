@@ -8,7 +8,6 @@ class ReviewSerializer(serializers.ModelSerializer):
     author = serializers.SlugRelatedField(
         slug_field='username', read_only=True)
     title_id = serializers.PrimaryKeyRelatedField(read_only=True)
-    text = serializers.CharField(max_length=200)
 
     class Meta:
         fields = '__all__'
