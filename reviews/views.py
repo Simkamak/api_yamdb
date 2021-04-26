@@ -3,11 +3,10 @@ from rest_framework import viewsets, status
 from rest_framework.permissions import (IsAuthenticatedOrReadOnly)
 from rest_framework.response import Response
 
-from .models import Title, Review, Category, Genre
+from .models import Review
 from .serializers import (
-    ReviewSerializer, CommentSerializer, CategorySerializer, TitleSerializer)
+    ReviewSerializer, CommentSerializer)
 from .permissions import IsAbleToChange
-from users.permissions import IsYAMDBAdministrator
 from .pagination import CustomPagination
 
 
@@ -52,24 +51,3 @@ class CommentViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         review = get_object_or_404(Review, id=self.kwargs['review_id'])
         serializer.save(review_id=review, author=self.request.user)
-
-
-class CategoryViewSet(viewsets.ModelViewSet):
-    queryset = Category.objects.all()
-    permission_classes = (IsYAMDBAdministrator, IsAuthenticatedOrReadOnly)
-    serializer_class = CategorySerializer
-    pagination_class = CustomPagination
-
-
-class TitleViewSet(viewsets.ModelViewSet):
-    queryset = Title.objects.all()
-    permission_classes = (IsYAMDBAdministrator, IsAuthenticatedOrReadOnly)
-    serializer_class = TitleSerializer
-    pagination_class = CustomPagination
-
-
-class GenreViewSet(viewsets.ModelViewSet):
-    queryset = Genre.objects.all()
-    permission_classes = (IsYAMDBAdministrator, IsAuthenticatedOrReadOnly)
-    serializer_class = TitleSerializer
-    pagination_class = CustomPagination
