@@ -12,3 +12,14 @@ class IsYAMDBAdministrator(permissions.BasePermission):
                 request.user.role == User.UserRole.ADMIN or
                 request.user.is_staff
         )
+
+
+class ReadOnly(permissions.BasePermission):
+    def has_permission(self, request, view):
+        if (
+                request.method in permissions.SAFE_METHODS
+                and request.user.is_authenticated
+        ):
+            return True
+
+
