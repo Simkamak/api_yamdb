@@ -29,11 +29,6 @@ class Title(models.Model):
                                  related_name='titles',
                                  on_delete=models.SET_NULL,
                                  blank=True, null=True)
-    # genre = models.ForeignKey(Genre,
-    #                           on_delete=models.SET_NULL,
-    #                           related_name='titles',
-    #                           blank=True,
-    #                           null=True)
     genre = models.ManyToManyField(Genre)
 
     def __str__(self):
