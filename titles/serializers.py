@@ -1,7 +1,8 @@
-from rest_framework import serializers
 from django.db.models import Avg
-from .models import Title, Category, Genre
 from pytils.translit import slugify
+from rest_framework import serializers
+
+from .models import Category, Genre, Title
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -35,10 +36,6 @@ class GenreSerializer(serializers.ModelSerializer):
 
 
 class TitleSerializer(serializers.ModelSerializer):
-    # category = serializers.SlugRelatedField(
-    #     slug_field='slug', read_only=True)
-    # genre = serializers.SlugRelatedField(
-    #     slug_field='slug', read_only=True)
     category = CategorySerializer(required=False, read_only=True)
     genre = GenreSerializer(Genre, required=False, many=True, read_only=True)
     rating = serializers.SerializerMethodField()

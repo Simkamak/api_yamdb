@@ -1,5 +1,6 @@
 from import_export import resources
-from .models import Title, Category, Genre
+
+from .models import Category, Genre, Title
 
 
 class CategoryResource(resources.ModelResource):

@@ -1,14 +1,14 @@
 from django.shortcuts import get_object_or_404
-from rest_framework import viewsets, status
-from rest_framework.permissions import (IsAuthenticatedOrReadOnly)
+from rest_framework import status, viewsets
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
 
-from .models import Review
 from titles.models import Title
-from .serializers import (
-    ReviewSerializer, CommentSerializer)
-from .permissions import IsAbleToChange
+
+from .models import Review
 from .pagination import CustomPagination
+from .permissions import IsAbleToChange
+from .serializers import CommentSerializer, ReviewSerializer
 
 
 class ReviewViewSet(viewsets.ModelViewSet):

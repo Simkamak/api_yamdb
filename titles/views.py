@@ -1,13 +1,13 @@
-from rest_framework import viewsets, filters, mixins
+from django.shortcuts import get_list_or_404, get_object_or_404
 from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import filters, mixins, status, viewsets
+from rest_framework.response import Response
+
+from .filters import SlugRangeFilter
 from .models import Category, Genre, Title
-from .serializers import CategorySerializer, GenreSerializer, TitleSerializer
 from .pagination import CustomPagination
 from .permissions import AdminOrReadOnly
-from .filters import SlugRangeFilter
-from django.shortcuts import get_object_or_404, get_list_or_404
-from rest_framework import status
-from rest_framework.response import Response
+from .serializers import CategorySerializer, GenreSerializer, TitleSerializer
 
 
 class CategoryViewSet(mixins.CreateModelMixin,
@@ -53,19 +53,25 @@ class TitleViewSet(viewsets.ModelViewSet):
     permission_classes = [AdminOrReadOnly]
     serializer_class = TitleSerializer
     pagination_class = CustomPagination
-    filter_class = SlugRangeFilter
+    filterset_class = SlugRangeFilter
     filter_backends = [DjangoFilterBackend]
 
     def perform_create(self, serializer):
-        category = get_object_or_404(Category, slug=self.request.data.get('category'))
-        genre = get_list_or_404(Genre, slug__in=self.request.data.getlist('genre'))
+        category = get_object_or_404(Category,
+                                     slug=self.request.data.get('category'))
+        genre = get_list_or_404(Genre,
+                                slug__in=self.request.data.getlist('genre'))
         serializer.save(category=category, genre=genre)
 
     def perform_update(self, serializer):
         category = None
         if 'category' in self.request.data:
-            category = get_object_or_404(Category, slug=self.request.data.get('category'))
+            category = get_object_or_404(
+                Category, slug=self.request.data.get('category')
+            )
         genre = []
         if 'genre' in self.request.data:
-            genre = get_list_or_404(Genre, slug__in=self.request.data.getlist('genre'))
+            genre = get_list_or_404(
+                Genre, slug__in=self.request.data.getlist('genre')
+            )
         serializer.save(category=category, genre=genre)

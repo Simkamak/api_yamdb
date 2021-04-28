@@ -1,7 +1,8 @@
 from django.contrib import admin
-from .models import Category, Title, Genre
-from .resources import CategoryResource, GenreResource, TitleResource
 from import_export.admin import ImportMixin
+
+from .models import Category, Genre, Title
+from .resources import CategoryResource, GenreResource, TitleResource
 
 
 class CategoryAdmin(ImportMixin, admin.ModelAdmin):
