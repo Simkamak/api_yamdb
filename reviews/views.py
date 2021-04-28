@@ -4,6 +4,7 @@ from rest_framework.permissions import (IsAuthenticatedOrReadOnly)
 from rest_framework.response import Response
 
 from .models import Review
+from titles.models import Title
 from .serializers import (
     ReviewSerializer, CommentSerializer)
 from .permissions import IsAbleToChange

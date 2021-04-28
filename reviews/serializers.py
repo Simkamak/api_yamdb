@@ -1,7 +1,6 @@
-from rest_framework import serializers, validators
-from django.db.models import Avg
+from rest_framework import serializers
 
-from .models import Review, Comment, Title, Category, Genre
+from .models import Review, Comment
 
 
 class ReviewSerializer(serializers.ModelSerializer):

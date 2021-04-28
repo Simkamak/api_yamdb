@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth import get_user_model
+from titles.models import Title
 
 User = get_user_model()
 
