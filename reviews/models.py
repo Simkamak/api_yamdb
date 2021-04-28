@@ -1,19 +1,8 @@
 from django.db import models
 from django.contrib.auth import get_user_model
+from titles.models import Title
 
 User = get_user_model()
-
-
-class Category(models.Model):
-    name = models.CharField('Название категории', max_length=200)
-    slug = models.SlugField(unique=True)
-
-
-class Title(models.Model):
-    name = models.CharField('Название произведения', max_length=200)
-    year = models.IntegerField('Год выхода произведения')
-    category = models.ForeignKey(Category, related_name='titles',
-                                 on_delete=models.CASCADE)
 
 
 class Review(models.Model):
