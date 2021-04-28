@@ -9,5 +9,5 @@ class AdminOrReadOnly(permissions.BasePermission):
             return True
         if not request.user.is_authenticated:
             return False
-        return (request.user.role == User.UserRole.ADMIN or
-                request.user.is_staff)
+        return (request.user.role == User.UserRole.ADMIN
+                or request.user.is_staff)
