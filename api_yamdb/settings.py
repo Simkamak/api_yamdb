@@ -36,7 +36,6 @@ INSTALLED_APPS = [
     'django_filters',
     'titles',
     'reviews',
-    'auth_app',
     'users',
     'import_export',
 ]
