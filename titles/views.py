@@ -5,7 +5,6 @@ from rest_framework.response import Response
 
 from .filters import SlugRangeFilter
 from .models import Category, Genre, Title
-from .pagination import CustomPagination
 from .permissions import AdminOrReadOnly
 from .serializers import CategorySerializer, GenreSerializer, TitleSerializer
 
@@ -17,7 +16,6 @@ class CategoryViewSet(mixins.CreateModelMixin,
     queryset = Category.objects.all()
     permission_classes = [AdminOrReadOnly]
     serializer_class = CategorySerializer
-    pagination_class = CustomPagination
     filter_backends = [filters.SearchFilter]
     search_fields = ['name', ]
 
@@ -36,7 +34,6 @@ class GenreViewSet(mixins.CreateModelMixin,
     queryset = Genre.objects.all()
     permission_classes = [AdminOrReadOnly]
     serializer_class = GenreSerializer
-    pagination_class = CustomPagination
     filter_backends = [filters.SearchFilter]
     search_fields = ['name', ]
 
@@ -52,7 +49,6 @@ class TitleViewSet(viewsets.ModelViewSet):
     queryset = Title.objects.all()
     permission_classes = [AdminOrReadOnly]
     serializer_class = TitleSerializer
-    pagination_class = CustomPagination
     filterset_class = SlugRangeFilter
     filter_backends = [DjangoFilterBackend]
 
