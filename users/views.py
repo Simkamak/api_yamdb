@@ -2,12 +2,12 @@ from django.shortcuts import get_object_or_404
 from rest_framework import filters, generics, permissions, viewsets
 
 from .models import User
-from .permissions import IsYAMDBAdministrator, ReadOnly
+from .permissions import IsYAMDBAdministrator
 from .serializers import UserSerializer
 
 
 class UserList(viewsets.ModelViewSet):
-    queryset = User.objects.get_queryset().order_by('id')
+    queryset = User.objects.all()
     serializer_class = UserSerializer
     lookup_field = 'username'
     permission_classes = [IsYAMDBAdministrator]

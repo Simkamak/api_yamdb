@@ -7,6 +7,7 @@ class IsYAMDBAdministrator(permissions.BasePermission):
     def has_permission(self, request, view):
         if not request.user.is_authenticated:
             return False
+<<<<<<< HEAD
         print('has_permission:', request.user, request.user.role)
         return (
                 request.user.role == User.UserRole.ADMIN or
@@ -52,3 +53,7 @@ class Moderator(permissions.BasePermission):
                     request.user.is_authenticated
                     and request.user.role == User.UserRole.MODERATOR
             )
+=======
+        return (request.user.role == User.UserRole.ADMIN
+                or request.user.is_staff)
+>>>>>>> master
