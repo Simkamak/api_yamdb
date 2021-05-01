@@ -36,7 +36,6 @@ INSTALLED_APPS = [
     'django_filters',
     'titles',
     'reviews',
-    'auth_app',
     'users',
     'import_export',
 ]
@@ -146,3 +145,4 @@ STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static/'),)
 
 EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
 EMAIL_FILE_PATH = os.path.join(BASE_DIR, "sent_emails")
+SERVER_EMAIL = 'admin@admin.ru'
