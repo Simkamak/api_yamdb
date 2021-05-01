@@ -7,13 +7,11 @@ from titles.models import Title
 from .serializers import (
     ReviewSerializer, CommentSerializer)
 from .permissions import IsAbleToChange
-from .pagination import CustomPagination
 
 
 class ReviewViewSet(viewsets.ModelViewSet):
     serializer_class = ReviewSerializer
     permission_classes = (IsAbleToChange, IsAuthenticatedOrReadOnly)
-    pagination_class = CustomPagination
 
     def get_queryset(self):
         title = get_object_or_404(Title, id=self.kwargs['title_id'])
@@ -27,7 +25,6 @@ class ReviewViewSet(viewsets.ModelViewSet):
 class CommentViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAbleToChange, IsAuthenticatedOrReadOnly)
     serializer_class = CommentSerializer
-    pagination_class = CustomPagination
 
     def get_queryset(self):
         title = get_object_or_404(Title, id=self.kwargs['title_id'])
