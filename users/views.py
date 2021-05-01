@@ -1,24 +1,25 @@
-from django.shortcuts import get_object_or_404
-from rest_framework import filters, generics, permissions, viewsets
+from rest_framework import filters, permissions, status, viewsets
+from rest_framework.decorators import action
+from rest_framework.response import Response
 
 from .models import User
-from .permissions import IsYAMDBAdministrator, ReadOnly
+from .permissions import IsYAMDBAdministrator
 from .serializers import UserSerializer
 
 
 class UserList(viewsets.ModelViewSet):
-    queryset = User.objects.get_queryset().order_by('id')
+    queryset = User.objects.all()
     serializer_class = UserSerializer
     lookup_field = 'username'
     permission_classes = [IsYAMDBAdministrator]
     filter_backends = [filters.SearchFilter]
     search_fields = ['username', ]
 
-
-class UserDetailAPIView(generics.RetrieveUpdateAPIView):
-    permission_classes = [permissions.IsAuthenticated, ]
-    serializer_class = UserSerializer
-
-    def get_object(self):
-        print(self.request.user)
-        return get_object_or_404(User, username=self.request.user)
+    @action(detail=False, methods=['get', 'put', 'patch'], url_path='me',
+            permission_classes=[permissions.IsAuthenticated])
+    def me(self, request):
+        user = self.request.user
+        serializer = self.get_serializer(user, data=request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
+        return Response(serializer.data, status=status.HTTP_200_OK)

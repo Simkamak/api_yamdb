@@ -36,7 +36,6 @@ INSTALLED_APPS = [
     'django_filters',
     'titles',
     'reviews',
-    'auth_app',
     'users',
     'import_export',
 ]
@@ -115,8 +114,7 @@ REST_FRAMEWORK = {
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ],
 
-    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.'
-                                'PageNumberPagination',
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 10
 
 }
@@ -147,3 +145,4 @@ STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static/'),)
 
 EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
 EMAIL_FILE_PATH = os.path.join(BASE_DIR, "sent_emails")
+SERVER_EMAIL = 'admin@admin.ru'
