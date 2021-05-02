@@ -37,9 +37,8 @@ def get_token(request):
         email = request.data['email']
         confirmation_code = request.data['confirmation_code']
         if confirmation_code != '':
-            user = get_object_or_404(
-                User, email=email, confirmation_code=confirmation_code
-                )
+            user = get_object_or_404(User, email=email,
+                                     confirmation_code=confirmation_code)
             token = AccessToken.for_user(user)
             user.confirmation_code = ''
             user.save()
