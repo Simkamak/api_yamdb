@@ -27,7 +27,7 @@ def get_confirmation_code(request):
                         status=status.HTTP_200_OK)
     except Exception as e:
         return Response({'errors': str(e)},
-                        status=status.HTTP_400_BAD_REQUEST)
+                        status.HTTP_203_NON_AUTHORITATIVE_INFORMATION)
 
 
 @api_view(['POST'])

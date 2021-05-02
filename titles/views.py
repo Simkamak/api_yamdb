@@ -4,8 +4,8 @@ from rest_framework import filters, mixins, viewsets
 from .filters import SlugRangeFilter
 from .models import Category, Genre, Title
 from .permissions import AdminOrReadOnly
-from .serializers import (CategorySerializer, GenreSerializer, TitleSerializer,
-                         TitleSafeSerializer)
+from .serializers import (CategorySerializer, GenreSerializer,
+                          TitleSafeSerializer, TitleSerializer)
 
 
 class CategoryViewSet(mixins.CreateModelMixin,
