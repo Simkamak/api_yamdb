@@ -1,5 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.db import models
+from pytils.translit import slugify
+
 
 User = get_user_model()
 
@@ -7,6 +9,11 @@ User = get_user_model()
 class Category(models.Model):
     name = models.CharField('Название категории', max_length=100)
     slug = models.SlugField(unique=True, blank=True, null=True)
+
+    def save(self, *args, **kwargs):
+        if self.slug in ('', None):
+            self.slug = slugify(self.name)
+        super(Category, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.name
@@ -18,6 +25,11 @@ class Category(models.Model):
 class Genre(models.Model):
     name = models.CharField('Название жанра', max_length=100)
     slug = models.SlugField(unique=True, blank=True, null=True)
+
+    def save(self, *args, **kwargs):
+        if self.slug in ('', None):
+            self.slug = slugify(self.name)
+        super(Genre, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.name
