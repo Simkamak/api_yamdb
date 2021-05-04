@@ -1,5 +1,6 @@
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters, mixins, viewsets
+from django.db.models import Avg
 
 from .filters import SlugRangeFilter
 from .models import Category, Genre, Title
@@ -33,7 +34,8 @@ class GenreViewSet(mixins.CreateModelMixin,
 
 
 class TitleViewSet(viewsets.ModelViewSet):
-    queryset = Title.objects.all()
+    queryset = Title.objects.annotate(
+        rating=Avg('reviews__score')).order_by('id')
     permission_classes = [AdminOrReadOnly]
     serializer_class = TitleSafeSerializer
     filterset_class = SlugRangeFilter
