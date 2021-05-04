@@ -34,12 +34,8 @@ class GenreViewSet(mixins.CreateModelMixin,
 
 
 class TitleViewSet(viewsets.ModelViewSet):
-<<<<<<< HEAD
     queryset = Title.objects.annotate(
         rating=Avg('reviews__score')).order_by('id')
-=======
-    queryset = Title.objects.select_related('reviews').all()
->>>>>>> 96aa069ba12d294b159d4bbb5b5c8eef1dbf327a
     permission_classes = [AdminOrReadOnly]
     serializer_class = TitleSafeSerializer
     filterset_class = SlugRangeFilter
