@@ -33,7 +33,7 @@ class GenreViewSet(mixins.CreateModelMixin,
 
 
 class TitleViewSet(viewsets.ModelViewSet):
-    queryset = Title.objects.all()
+    queryset = Title.objects.select_related('reviews').all()
     permission_classes = [AdminOrReadOnly]
     serializer_class = TitleSafeSerializer
     filterset_class = SlugRangeFilter
@@ -41,9 +41,7 @@ class TitleViewSet(viewsets.ModelViewSet):
 
     def get_serializer_class(self):
         method = self.request.method
-        if method == 'POST':
-            return TitleSerializer
-        if method == 'PATCH':
+        if method in ['POST', 'PATCH']:
             return TitleSerializer
         if method == 'GET':
             return TitleSafeSerializer
