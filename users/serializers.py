@@ -27,6 +27,3 @@ class UserConfirmationSerializer(UserAuthSerializer):
     class Meta:
         model = User
         fields = ['confirmation_code', 'email', 'username']
-
-
-

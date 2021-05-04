@@ -7,8 +7,7 @@ from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import AccessToken
 
 from api_yamdb.settings import SERVER_EMAIL
-from users.serializers import (UserAuthSerializer, UserConfirmationSerializer,
-                               UserSerializer)
+from users.serializers import (UserAuthSerializer, UserConfirmationSerializer)
 
 User = get_user_model()
 
@@ -52,7 +51,3 @@ def get_token(request):
 
         return Response({'token': str(token)}, status=status.HTTP_200_OK)
     return Response(serializer.errors)
-
-
-
-
