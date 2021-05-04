@@ -33,7 +33,7 @@ class GenreViewSet(mixins.CreateModelMixin,
 
 
 class TitleViewSet(viewsets.ModelViewSet):
-    queryset = Title.objects.all()
+    queryset = Title.objects.select_related('reviews').all()
     permission_classes = [AdminOrReadOnly]
     serializer_class = TitleSafeSerializer
     filterset_class = SlugRangeFilter
